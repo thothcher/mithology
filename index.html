@@ -1,25 +1,1144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Mythology Hierarchies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ancient Pantheons - Explore Divine Mythologies</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(ellipse at center, rgba(138, 107, 255, 0.15), transparent);
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+      animation: stars 200s linear infinite;
+    }
+
+    @keyframes stars {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-100px);
+      }
+    }
+
+    h1 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #fff, #d4af37, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s infinite;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: #c5c5c5;
+      margin-bottom: 3rem;
+      z-index: 1;
+    }
+
+    .menu-btn {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .menu-btn span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(8px, -8px);
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 400px;
+      height: 100vh;
+      background: rgba(15, 12, 41, 0.95);
+      backdrop-filter: blur(20px);
+      border-left: 2px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+      padding: 8rem 3rem;
+      transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .nav-menu.active {
+      right: 0;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+    }
+
+    .nav-menu li {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu.active li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-menu.active li:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .nav-menu.active li:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .nav-menu.active li:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .nav-menu.active li:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: block;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-menu a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d4af37, #fff);
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover::before {
+      width: 100%;
+    }
+
+    .nav-menu a:hover {
+      color: #d4af37;
+      transform: translateX(10px);
+    }
+
+    .section {
+      min-height: 100vh;
+      padding: 6rem 5%;
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: linear-gradient(45deg, #d4af37, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      height: 400px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+
+    .card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover .card-image {
+      opacity: 0.6;
+    }
+
+    .card-name {
+      font-size: 2rem;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 2px solid #d4af37;
+      transform: rotateY(180deg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-info {
+      line-height: 1.8;
+    }
+
+    .card-info h3 {
+      color: #d4af37;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .card-info p {
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .card-info strong {
+      color: #d4af37;
+    }
+
+    .explore-btn {
+      background: linear-gradient(45deg, #d4af37, #f4e5b1);
+      color: #000;
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+      z-index: 1;
+    }
+
+    .explore-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .nav-menu {
+        width: 100%;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
-<body>
-  <h1>Mythology Hierarchies</h1>
-  <div class="buttons">
-    <button onclick="loadData('greek')">Greek</button>
-    <button onclick="loadData('roman')">Roman</button>
-    <button onclick="loadData('egyptian')">Egyptian</button>
-  </div>
-  <div id="chart"></div>
 
-  <!-- D3.js -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="script.js">
-  
+<body>
+  <div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="nav-menu">
+    <ul>
+      <li><a href="#" onclick="showSection('greek')">Greek Pantheon</a></li>
+      <li><a href="#" onclick="showSection('roman')">Roman Pantheon</a></li>
+      <li><a href="#" onclick="showSection('egyptian')">Egyptian Pantheon</a></li>
+      <li><a href="#" onclick="showSection('vedic')">Vedic Pantheon</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>Ancient Pantheons</h1>
+    <p class="subtitle">Explore the Divine Mythologies of Ancient Civilizations</p>
+    <button class="explore-btn" onclick="showSection('greek')">Begin Your Journey</button>
+  </div>
+
+  <section id="greek" class="section">
+    <h2 class="section-title">Greek Pantheon</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23667eea' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"
+              alt="Zeus" class="card-image">
+            <h3 class="card-name">Zeus</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Zeus</h3>
+              <p><strong>God of:</strong> Sky, Thunder, Lightning, King of Gods</p>
+              <p><strong>Spouse:</strong> Hera</p>
+              <p><strong>Parents:</strong> Cronus and Rhea</p>
+              <p><strong>Children:</strong> Athena, Apollo, Artemis, Hermes, Dionysus, Ares, and many more</p>
+              <p><strong>Symbol:</strong> Thunderbolt, Eagle, Oak</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23f093fb' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E👑%3C/text%3E%3C/svg%3E"
+              alt="Hera" class="card-image">
+            <h3 class="card-name">Hera</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Hera</h3>
+              <p><strong>Goddess of:</strong> Marriage, Women, Family, Queen of Gods</p>
+              <p><strong>Spouse:</strong> Zeus</p>
+              <p><strong>Parents:</strong> Cronus and Rhea</p>
+              <p><strong>Children:</strong> Ares, Hebe, Hephaestus, Eileithyia</p>
+              <p><strong>Symbol:</strong> Peacock, Cow, Pomegranate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%234facfe' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🔱%3C/text%3E%3C/svg%3E"
+              alt="Poseidon" class="card-image">
+            <h3 class="card-name">Poseidon</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Poseidon</h3>
+              <p><strong>God of:</strong> Sea, Earthquakes, Horses</p>
+              <p><strong>Spouse:</strong> Amphitrite</p>
+              <p><strong>Parents:</strong> Cronus and Rhea</p>
+              <p><strong>Children:</strong> Triton, Theseus, Polyphemus, Orion</p>
+              <p><strong>Symbol:</strong> Trident, Horse, Dolphin</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23fa709a' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E💕%3C/text%3E%3C/svg%3E"
+              alt="Aphrodite" class="card-image">
+            <h3 class="card-name">Aphrodite</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Aphrodite</h3>
+              <p><strong>Goddess of:</strong> Love, Beauty, Pleasure, Passion</p>
+              <p><strong>Spouse:</strong> Hephaestus (affair with Ares)</p>
+              <p><strong>Parents:</strong> Born from sea foam (or Zeus & Dione)</p>
+              <p><strong>Children:</strong> Eros, Harmonia, Aeneas</p>
+              <p><strong>Symbol:</strong> Dove, Rose, Swan, Myrtle</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23feca57' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E☀️%3C/text%3E%3C/svg%3E"
+              alt="Apollo" class="card-image">
+            <h3 class="card-name">Apollo</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Apollo</h3>
+              <p><strong>God of:</strong> Sun, Music, Poetry, Prophecy, Healing</p>
+              <p><strong>Spouse:</strong> None (many lovers)</p>
+              <p><strong>Parents:</strong> Zeus and Leto</p>
+              <p><strong>Twin:</strong> Artemis</p>
+              <p><strong>Symbol:</strong> Lyre, Bow, Laurel, Sun</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23a8e6cf' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🏹%3C/text%3E%3C/svg%3E"
+              alt="Artemis" class="card-image">
+            <h3 class="card-name">Artemis</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Artemis</h3>
+              <p><strong>Goddess of:</strong> Hunt, Wilderness, Moon, Chastity</p>
+              <p><strong>Spouse:</strong> None (virgin goddess)</p>
+              <p><strong>Parents:</strong> Zeus and Leto</p>
+              <p><strong>Twin:</strong> Apollo</p>
+              <p><strong>Symbol:</strong> Bow, Deer, Moon, Cypress</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23ff6b6b' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E⚔️%3C/text%3E%3C/svg%3E"
+              alt="Ares" class="card-image">
+            <h3 class="card-name">Ares</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Ares</h3>
+              <p><strong>God of:</strong> War, Courage, Bloodshed</p>
+              <p><strong>Lover:</strong> Aphrodite</p>
+              <p><strong>Parents:</strong> Zeus and Hera</p>
+              <p><strong>Children:</strong> Phobos, Deimos, Harmonia, Eros</p>
+              <p><strong>Symbol:</strong> Spear, Helmet, Dog, Vulture</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23dfe6e9' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🦉%3C/text%3E%3C/svg%3E"
+              alt="Athena" class="card-image">
+            <h3 class="card-name">Athena</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Athena</h3>
+              <p><strong>Goddess of:</strong> Wisdom, War Strategy, Crafts</p>
+              <p><strong>Spouse:</strong> None (virgin goddess)</p>
+              <p><strong>Parents:</strong> Zeus (born from his head)</p>
+              <p><strong>Symbol:</strong> Owl, Olive Tree, Shield, Spear</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="roman" class="section">
+    <h2 class="section-title">Roman Pantheon</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23667eea' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"
+              alt="Jupiter" class="card-image">
+            <h3 class="card-name">Jupiter</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Jupiter</h3>
+              <p><strong>God of:</strong> Sky, Thunder, King of Gods</p>
+              <p><strong>Spouse:</strong> Juno</p>
+              <p><strong>Greek Equivalent:</strong> Zeus</p>
+              <p><strong>Children:</strong> Mars, Vulcan, Minerva, Apollo</p>
+              <p><strong>Symbol:</strong> Eagle, Thunderbolt, Oak</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23f093fb' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E👑%3C/text%3E%3C/svg%3E"
+              alt="Juno" class="card-image">
+            <h3 class="card-name">Juno</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Juno</h3>
+              <p><strong>Goddess of:</strong> Marriage, Women, Queen of Gods</p>
+              <p><strong>Spouse:</strong> Jupiter</p>
+              <p><strong>Greek Equivalent:</strong> Hera</p>
+              <p><strong>Children:</strong> Mars, Vulcan, Juventas</p>
+              <p><strong>Symbol:</strong> Peacock, Cow, Lily</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%234facfe' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🔱%3C/text%3E%3C/svg%3E"
+              alt="Neptune" class="card-image">
+            <h3 class="card-name">Neptune</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Neptune</h3>
+              <p><strong>God of:</strong> Sea, Earthquakes, Horses</p>
+              <p><strong>Spouse:</strong> Salacia</p>
+              <p><strong>Greek Equivalent:</strong> Poseidon</p>
+              <p><strong>Children:</strong> Triton, Arion</p>
+              <p><strong>Symbol:</strong> Trident, Horse, Dolphin</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23fa709a' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E💕%3C/text%3E%3C/svg%3E"
+              alt="Venus" class="card-image">
+            <h3 class="card-name">Venus</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Venus</h3>
+              <p><strong>Goddess of:</strong> Love, Beauty, Desire, Victory</p>
+              <p><strong>Spouse:</strong> Vulcan (affair with Mars)</p>
+              <p><strong>Greek Equivalent:</strong> Aphrodite</p>
+              <p><strong>Children:</strong> Cupid, Aeneas</p>
+              <p><strong>Symbol:</strong> Dove, Rose, Swan, Myrtle</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23ff6b6b' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E⚔️%3C/text%3E%3C/svg%3E"
+              alt="Mars" class="card-image">
+            <h3 class="card-name">Mars</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Mars</h3>
+              <p><strong>God of:</strong> War, Agriculture, Guardian of Rome</p>
+              <p><strong>Lover:</strong> Venus</p>
+              <p><strong>Greek Equivalent:</strong> Ares</p>
+              <p><strong>Parents:</strong> Jupiter and Juno</p>
+              <p><strong>Symbol:</strong> Spear, Shield, Wolf, Woodpecker</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23dfe6e9' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🦉%3C/text%3E%3C/svg%3E"
+              alt="Minerva" class="card-image">
+            <h3 class="card-name">Minerva</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Minerva</h3>
+              <p><strong>Goddess of:</strong> Wisdom, Strategic War,Crafts</p>
+              <p><strong>Spouse:</strong> None (virgin goddess)</p>
+              <p><strong>Greek Equivalent:</strong> Athena</p>
+              <p><strong>Parents:</strong> Jupiter</p>
+              <p><strong>Symbol:</strong> Owl, Olive Tree, Aegis</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23feca57' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E☀️%3C/text%3E%3C/svg%3E"
+              alt="Apollo" class="card-image">
+            <h3 class="card-name">Apollo</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Apollo</h3>
+              <p><strong>God of:</strong> Sun, Music, Poetry, Prophecy, Healing</p>
+              <p><strong>Twin Sister:</strong> Diana</p>
+              <p><strong>Greek Equivalent:</strong> Apollo</p>
+              <p><strong>Parents:</strong> Jupiter and Latona</p>
+              <p><strong>Symbol:</strong> Lyre, Bow, Laurel, Sun Chariot</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23a8e6cf' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🌙%3C/text%3E%3C/svg%3E"
+              alt="Diana" class="card-image">
+            <h3 class="card-name">Diana</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Diana</h3>
+              <p><strong>Goddess of:</strong> Hunt, Moon, Wilderness, Childbirth</p>
+              <p><strong>Spouse:</strong> None (virgin goddess)</p>
+              <p><strong>Greek Equivalent:</strong> Artemis</p>
+              <p><strong>Parents:</strong> Jupiter and Latona</p>
+              <p><strong>Symbol:</strong> Bow, Deer, Moon, Torch</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="egyptian" class="section">
+    <h2 class="section-title">Egyptian Pantheon</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23feca57' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E☀️%3C/text%3E%3C/svg%3E"
+              alt="Ra" class="card-image">
+            <h3 class="card-name">Ra</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Ra</h3>
+              <p><strong>God of:</strong> Sun, Creation, King of Gods</p>
+              <p><strong>Spouse:</strong> Hathor/Sekhmet</p>
+              <p><strong>Children:</strong> Shu, Tefnut, Sekhmet, Bastet</p>
+              <p><strong>Role:</strong> Supreme deity, travels across sky daily</p>
+              <p><strong>Symbol:</strong> Sun disk, Falcon, Ankh</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%2374b9ff' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E👁️%3C/text%3E%3C/svg%3E"
+              alt="Osiris" class="card-image">
+            <h3 class="card-name">Osiris</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Osiris</h3>
+              <p><strong>God of:</strong> Afterlife, Death, Resurrection, Agriculture</p>
+              <p><strong>Spouse:</strong> Isis</p>
+              <p><strong>Parents:</strong> Geb and Nut</p>
+              <p><strong>Children:</strong> Horus</p>
+              <p><strong>Symbol:</strong> Crook, Flail, Atef Crown</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23fa8231' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E✨%3C/text%3E%3C/svg%3E"
+              alt="Isis" class="card-image">
+            <h3 class="card-name">Isis</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Isis</h3>
+              <p><strong>Goddess of:</strong> Magic, Motherhood, Healing, Wisdom</p>
+              <p><strong>Spouse:</strong> Osiris</p>
+              <p><strong>Parents:</strong> Geb and Nut</p>
+              <p><strong>Children:</strong> Horus</p>
+              <p><strong>Symbol:</strong> Throne, Tyet knot, Wings</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23d4af37' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🦅%3C/text%3E%3C/svg%3E"
+              alt="Horus" class="card-image">
+            <h3 class="card-name">Horus</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Horus</h3>
+              <p><strong>God of:</strong> Sky, Kingship, Protection</p>
+              <p><strong>Spouse:</strong> Hathor</p>
+              <p><strong>Parents:</strong> Osiris and Isis</p>
+              <p><strong>Children:</strong> Four Sons of Horus</p>
+              <p><strong>Symbol:</strong> Falcon, Eye of Horus, Was Scepter</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23333333' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🐺%3C/text%3E%3C/svg%3E"
+              alt="Anubis" class="card-image">
+            <h3 class="card-name">Anubis</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Anubis</h3>
+              <p><strong>God of:</strong> Mummification, Death, Embalming</p>
+              <p><strong>Spouse:</strong> Anput</p>
+              <p><strong>Parents:</strong> Osiris and Nephthys (or Ra and Nephthys)</p>
+              <p><strong>Role:</strong> Guide of souls to afterlife</p>
+              <p><strong>Symbol:</strong> Jackal, Was Scepter</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23ee5a6f' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🦁%3C/text%3E%3C/svg%3E"
+              alt="Sekhmet" class="card-image">
+            <h3 class="card-name">Sekhmet</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Sekhmet</h3>
+              <p><strong>Goddess of:</strong> War, Plague, Healing, Vengeance</p>
+              <p><strong>Spouse:</strong> Ptah</p>
+              <p><strong>Parents:</strong> Ra (or created by Ra)</p>
+              <p><strong>Children:</strong> Nefertem</p>
+              <p><strong>Symbol:</strong> Lioness, Solar disk, Uraeus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23c44569' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🔥%3C/text%3E%3C/svg%3E"
+              alt="Set" class="card-image">
+            <h3 class="card-name">Set</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Set</h3>
+              <p><strong>God of:</strong> Chaos, Desert, Storms, Disorder</p>
+              <p><strong>Spouse:</strong> Nephthys</p>
+              <p><strong>Parents:</strong> Geb and Nut</p>
+              <p><strong>Role:</strong> Murdered Osiris, fought with Horus</p>
+              <p><strong>Symbol:</strong> Was Scepter, Set Animal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23cd84f1' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E💜%3C/text%3E%3C/svg%3E"
+              alt="Hathor" class="card-image">
+            <h3 class="card-name">Hathor</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Hathor</h3>
+              <p><strong>Goddess of:</strong> Love, Beauty, Music, Motherhood, Joy</p>
+              <p><strong>Spouse:</strong> Horus (or Ra)</p>
+              <p><strong>Children:</strong> Ihy, Horus</p>
+              <p><strong>Role:</strong> Protector of women, patron of musicians</p>
+              <p><strong>Symbol:</strong> Cow, Sistrum, Mirror, Menat</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vedic" class="section">
+    <h2 class="section-title">Vedic Pantheon</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23667eea' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"
+              alt="Indra" class="card-image">
+            <h3 class="card-name">Indra</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Indra</h3>
+              <p><strong>God of:</strong> Thunder, Rain, War, King of Gods</p>
+              <p><strong>Spouse:</strong> Indrani (Shachi)</p>
+              <p><strong>Parents:</strong> Dyaus and Prithvi</p>
+              <p><strong>Children:</strong> Jayanta, Jayanti</p>
+              <p><strong>Symbol:</strong> Vajra (thunderbolt), Elephant Airavata</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23f093fb' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🔥%3C/text%3E%3C/svg%3E"
+              alt="Agni" class="card-image">
+            <h3 class="card-name">Agni</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Agni</h3>
+              <p><strong>God of:</strong> Fire, Sacrifices, Divine Messenger</p>
+              <p><strong>Spouse:</strong> Svaha</p>
+              <p><strong>Parents:</strong> Dyaus and Prithvi (or self-created)</p>
+              <p><strong>Role:</strong> Mediator between humans and gods</p>
+              <p><strong>Symbol:</strong> Fire, Ram, Seven tongues of flame</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%234facfe' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🌊%3C/text%3E%3C/svg%3E"
+              alt="Varuna" class="card-image">
+            <h3 class="card-name">Varuna</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Varuna</h3>
+              <p><strong>God of:</strong> Water, Oceans, Cosmic Order, Sky</p>
+              <p><strong>Spouse:</strong> Varuni</p>
+              <p><strong>Role:</strong> Guardian of cosmic law (Rita)</p>
+              <p><strong>Children:</strong> Vasistha, Agastya</p>
+              <p><strong>Symbol:</strong> Noose, Makara (sea creature)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23feca57' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E☀️%3C/text%3E%3C/svg%3E"
+              alt="Surya" class="card-image">
+            <h3 class="card-name">Surya</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Surya</h3>
+              <p><strong>God of:</strong> Sun, Light, Life, Health</p>
+              <p><strong>Spouses:</strong> Saranyu, Chhaya</p>
+              <p><strong>Parents:</strong> Aditi and Kashyapa</p>
+              <p><strong>Children:</strong> Yama, Yamuna, Ashvins, Shani</p>
+              <p><strong>Symbol:</strong> Sun chariot, Seven horses, Lotus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23a8e6cf' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🌙%3C/text%3E%3C/svg%3E"
+              alt="Soma" class="card-image">
+            <h3 class="card-name">Soma</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Soma</h3>
+              <p><strong>God of:</strong> Moon, Divine Drink, Plants</p>
+              <p><strong>Spouses:</strong> 27 daughters of Daksha (Nakshatras)</p>
+              <p><strong>Parents:</strong> Atri and Anusuya</p>
+              <p><strong>Role:</strong> Grants immortality through sacred drink</p>
+              <p><strong>Symbol:</strong> Moon, Crescent, Antelope</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23ff6b6b' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🗡️%3C/text%3E%3C/svg%3E"
+              alt="Rudra" class="card-image">
+            <h3 class="card-name">Rudra</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Rudra</h3>
+              <p><strong>God of:</strong> Storms, Hunt, Death, Healing</p>
+              <p><strong>Spouse:</strong> Prishni/Rudrani</p>
+              <p><strong>Role:</strong> Wild, destructive aspect (later Shiva)</p>
+              <p><strong>Children:</strong> Maruts (storm gods)</p>
+              <p><strong>Symbol:</strong> Bow and arrows, Trident, Bull</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23ee5a6f' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🌺%3C/text%3E%3C/svg%3E"
+              alt="Ushas" class="card-image">
+            <h3 class="card-name">Ushas</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Ushas</h3>
+              <p><strong>Goddess of:</strong> Dawn, New Beginnings</p>
+              <p><strong>Parents:</strong> Dyaus and Prithvi</p>
+              <p><strong>Role:</strong> Brings light, awakens all living beings</p>
+              <p><strong>Sibling:</strong> Sister of Ratri (Night)</p>
+              <p><strong>Symbol:</strong> Dawn light, Chariot, Red garments</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%2395e1d3' width='400' height='400'/%3E%3Ctext x='200' y='220' font-size='120' text-anchor='middle' fill='white'%3E🌬️%3C/text%3E%3C/svg%3E"
+              alt="Vayu" class="card-image">
+            <h3 class="card-name">Vayu</h3>
+          </div>
+          <div class="card-back">
+            <div class="card-info">
+              <h3>Vayu</h3>
+              <p><strong>God of:</strong> Wind, Breath, Life Force</p>
+              <p><strong>Spouse:</strong> Bharati</p>
+              <p><strong>Role:</strong> Carries prayers to gods</p>
+              <p><strong>Children:</strong> Hanuman, Bhima</p>
+              <p><strong>Symbol:</strong> Wind, White horse, Deer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const menuBtn = document.querySelector('.menu-btn');
+      const navMenu = document.querySelector('.nav-menu');
+      menuBtn.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    }
+
+    function showSection(sectionId) {
+      // Hide hero
+      document.querySelector('.hero').style.display = 'none';
+
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+
+      // Close menu
+      document.querySelector('.menu-btn').classList.remove('active');
+      document.querySelector('.nav-menu').classList.remove('active');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const menuBtn = document.querySelector('.menu-btn');
+      const navMenu = document.querySelector('.nav-menu');
+
+      if (!menuBtn.contains(e.target) && !navMenu.contains(e.target)) {
+        menuBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Add smooth card hover effects
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-10px)';
+      });
+
+      card.addEventListener('mouseleave', function () {
+        this.style.transform = 'translateY(0)';
+      });
+    });
   </script>
 </body>
+
 </html>
